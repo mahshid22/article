@@ -13,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Pagination from '@material-ui/lab/Pagination';
+import { useHistory } from "react-router-dom";
 import '../css/Article.css'
 import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
@@ -34,9 +35,15 @@ export default function AlignItemsList() {
     const [articles, setArticles] = React.useState([]);
     const [articlesCount, setArticlesCount] = React.useState(0);
     const [page, setPage] = React.useState(1);
+    const history = useHistory();
     const handleChange = (event, value) => {
         console.log(value);
         setPage(value);
+    };
+    const handleRedirectToArticle = (id) => {
+        console.log(id);
+        history.push(`/article/${id}`);
+        // setPage(value);
     };
 
     useEffect(() => {
@@ -64,7 +71,7 @@ export default function AlignItemsList() {
                 {articles.map((article) => {
                     return (
                         <>
-                            <ListItem alignItems="flex-start">
+                            <ListItem alignItems="flex-start" onClick={()=>handleRedirectToArticle(article.slug)}>
                                 <ListItemAvatar>
                                     <Avatar alt="Remy Sharp" src={article.author.image}/>
                                 </ListItemAvatar>

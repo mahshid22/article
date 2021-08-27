@@ -7,6 +7,7 @@ import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import NewPost from './components/NewPost'
 import Settings from './components/Settings'
+import Article from './components/Article'
 
 function App() {
   return (
@@ -22,9 +23,9 @@ function App() {
           <Route path='/SignUp' component={SignUp} />
           <Route path='/NewPost' component={NewPost} />
           <Route path='/settings' component={Settings} />
+          <Route path='/article/:id' component={Article} />
           {/* <Route path='/editor/:slug' component={Editor} /> */}
-          {/* <Route path='/article/:id' component={Article} />
-          <Route path='/@:username/favorites' component={ProfileFavorites} />
+          {/* <Route path='/@:username/favorites' component={ProfileFavorites} />
           <Route path='/@:username' component={Profile} /> */}
         </Switch>
       </BrowserRouter>
