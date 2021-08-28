@@ -23,7 +23,7 @@ function App() {
           <Route path='/SignUp' component={SignUp} />
           <Route path='/NewPost' component={NewPost} />
           <Route path='/settings' component={Settings} />
-          <Route path='/article/:id' component={Article} />
+          <Route path='/article/:slug' component={Article} />
           {/* <Route path='/editor/:slug' component={Editor} /> */}
           {/* <Route path='/@:username/favorites' component={ProfileFavorites} />
           <Route path='/@:username' component={Profile} /> */}

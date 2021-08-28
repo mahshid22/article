@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -15,7 +16,9 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from "react-router-dom";
 import '../css/Article.css'
-import axios from 'axios';
+import { getArticles } from '../actions'
+import axios from "axios";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -25,55 +28,45 @@ const useStyles = makeStyles((theme) => ({
     inline: {
         display: 'inline',
     },
-    ListItemTextHover:{
+    ListItemTextHover: {
         cursor: 'pointer',
     }
 }));
 
 export default function AlignItemsList() {
+    const dispatch = useDispatch();
+    const articles = useSelector(state => state.Articles.articles)
+    const articlesCount = useSelector(state => state.Articles.articlesCount)
     const classes = useStyles();
-    const [articles, setArticles] = React.useState([]);
-    const [articlesCount, setArticlesCount] = React.useState(0);
+    // const [articles, setArticles] = React.useState([]);
+    // const [articlesCount, setArticlesCount] = React.useState(0);
     const [page, setPage] = React.useState(1);
     const history = useHistory();
     const handleChange = (event, value) => {
-        console.log(value);
         setPage(value);
     };
-    const handleRedirectToArticle = (id) => {
-        console.log(id);
-        history.push(`/article/${id}`);
+    const handleRedirectToArticle = (slug) => {
+        history.push(`/article/${slug}`);
         // setPage(value);
     };
 
     useEffect(() => {
-        axios.get('https://conduit.productionready.io/api/articles')
-            .then(function (response) {
-                // handle success
-                console.log(response);
-                setArticles(response.data.articles)
-                setArticlesCount(response.data.articlesCount)
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
-
+        dispatch(getArticles())
     }, []);
-    console.log(articles);
+
     if (!articlesCount) return <p>Loading...</p>
     return (
         <>
+            <div className="article_title">
+                <h1>ARTICLES LIST</h1>
+            </div>
             <List className={classes.root}>
                 {articles.map((article) => {
                     return (
                         <>
-                            <ListItem alignItems="flex-start" onClick={()=>handleRedirectToArticle(article.slug)}>
+                            <ListItem alignItems="flex-start" onClick={() => handleRedirectToArticle(article.slug)}>
                                 <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src={article.author.image}/>
+                                    <Avatar alt="Remy Sharp" src={article.author.image} />
                                 </ListItemAvatar>
                                 <ListItemText
                                     className={classes.ListItemTextHover}
@@ -86,15 +79,15 @@ export default function AlignItemsList() {
                                                 className={classes.inline}
                                                 color="textPrimary"
                                             >
-                                                 {article.author.username } 
+                                                {article.author.username}
                                             </Typography>
-                                             { article.description } 
+                                            {article.description}
                                         </React.Fragment>
                                     }
                                 />
                                 <ListItemSecondaryAction>
-                                    <IconButton  edge="end" aria-label="star" onClick={() => console.log('hello')}>
-                                       {article.favoritesCount} {article.favorited?<StarIcon/>:<StarBorderIcon />}
+                                    <IconButton edge="end" aria-label="star" onClick={() => console.log('hello')}>
+                                        {article.favoritesCount} {article.favorited ? <StarIcon /> : <StarBorderIcon />}
                                     </IconButton>
                                 </ListItemSecondaryAction>
                             </ListItem>
@@ -105,7 +98,7 @@ export default function AlignItemsList() {
 
 
             </List>
-            <Pagination count={articles.articlesCount/20} shape="rounded" page={page} onChange={handleChange} />
+            <Pagination count={articlesCount / 20} shape="rounded" page={page} onChange={handleChange} />
         </>
     );
 }

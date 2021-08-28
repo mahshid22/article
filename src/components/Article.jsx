@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Comment from './comment';
+import { getSingleArticles, getSingleArticlesComments } from '../actions'
 import '../css/Article.css';
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,27 +19,35 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Article() {
+export default function Article(props) {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const article = useSelector(state => state.Articles.article)
+    const comments = useSelector(state => state.Articles.comments)
     const [body, setBody] = useState('');
-    const [article, setArticle] = useState({});
-    const [comments, setComments] = useState({});
+    // const [article, setArticle] = useState({});
+    // const [comments, setComments] = useState({});
+    let { slug } = useParams();
 
-    function handleSubmit(event) {
+    useEffect(() => {
+        dispatch(getSingleArticles(slug))
+        dispatch(getSingleArticlesComments(slug))
+    }, []);
+
+    const handleSubmit=((event) =>{
         event.preventDefault();
         // console.log('Email:', email, 'Password: ', password, 'userName: ', userName);
-    }
-    if (!Object.keys(article).length === 0) return <p>Loading...</p>
+    })
+    if (!article) return <p>Loading...</p>
     return (
         <>
             <div className='single_article_header'>
-                {/* <h1>{article.title}</h1>
-                <p>{article.author.username} {article.author.username === username? <span>Delete Article</span> : ''}</p> */}
-                <h1>article.title</h1>
-                <div>article.author.username </div>
+                <p>{article.title}</p>
+                <p>{article.author.username} </p>
+                {/* <p>{article.author.username} {article.author.username === username? <span>Delete Article</span> : ''}</p> */}
             </div>
             {/* <div> */}
-            <p className='single_article_body'>article.body</p>
+            <p className='single_article_body'>{article.body}</p>
             <hr style={{ width: '70%' }} />
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <div>
@@ -58,12 +69,10 @@ export default function Article() {
                     color="primary"
                     className={classes.btn}
                 >
-                    Publish Article
+                    Publish COMMENT
                 </Button>
             </form>
-            <Comment comments={[{ id: 104876, createdAt: "2021-08-27T08:06:02.479Z", updatedAt: "2021-08-27T08:06:02.479Z", body: "Cypress comment", author: {username: "cy828427870", bio: null, image: "https://static.productionready.io/images/smiley-cyrus.jpg", following: false}
-},{ id: 104876, createdAt: "2021-08-27T08:06:02.479Z", updatedAt: "2021-08-27T08:06:02.479Z", body: "Cypress comment", author: {username: "cy828427870", bio: null, image: "https://static.productionready.io/images/smiley-cyrus.jpg", following: false}
- }]}/>
+            <Comment comments={comments} />
             {/* </div> */}
 
         </>

@@ -6,6 +6,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -20,7 +22,7 @@ export default function SimpleBottomNavigation() {
     const [value, setValue] = React.useState(0);
     const history = useHistory();
     const preventDefault = (event) => event.preventDefault();
-    if (!true) {
+    if (true) {
         return (
             <div >
             <BottomNavigation
@@ -32,9 +34,9 @@ export default function SimpleBottomNavigation() {
                 showLabels
                 className={classes.root}
             >
-                <BottomNavigationAction label="Home" value={'/'} />
-                <BottomNavigationAction label="Sign in" value={'/SignIn'}/>
-                <BottomNavigationAction label="Sign up" value={'/SignUp'}/>
+                <BottomNavigationAction label="Home" value={'/'} icon={<HomeIcon />}/>
+                <BottomNavigationAction label="Sign in" value={'/SignIn'} icon={<LockOpenIcon />}/>
+                <BottomNavigationAction label="Sign up" value={'/SignUp'} icon={<AssignmentIndIcon />}/>
             </BottomNavigation>
             </div>
         );

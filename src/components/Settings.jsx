@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
+import '../css/setting.css'
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -29,7 +29,9 @@ export default function Settings() {
 
     return (
         <>
-            <h1>Your Settings</h1>
+            <div className="setting_title">
+                <h1>Your Settings</h1>
+            </div>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <div>
                     <TextField
@@ -60,17 +62,17 @@ export default function Settings() {
                     />
                 </div>
                 <div>
-                <TextField
-                            id="outlined-password-input"
-                            label="Password"
-                            type="password"
-                            value={password}
-                            onInput={e => setPassword(e.target.value)}
-                            autoComplete="current-password"
-                            variant="outlined"
-                        />
+                    <TextField
+                        id="outlined-password-input"
+                        label="Password"
+                        type="password"
+                        value={password}
+                        onInput={e => setPassword(e.target.value)}
+                        autoComplete="current-password"
+                        variant="outlined"
+                    />
                 </div>
-              
+
                 <Button
                     type="submit"
                     variant="outlined"

@@ -35,12 +35,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Comment = ({ comments }) => {
+    console.log(comments);
     const classes = useStyles();
     const [userName, setUserName] = React.useState('');
+    if(!comments) return 'Loading ...'
     return (
         <List className={classes.root}>
             {comments.map(comment => {
-                console.log("Comment", comment);
                 return (
                     <React.Fragment key={comment.id}>
                         <ListItem key={comment.id} alignItems="flex-start">
