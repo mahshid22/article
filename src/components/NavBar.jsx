@@ -5,10 +5,11 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import CreateIcon from '@material-ui/icons/Create';
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 const useStyles = makeStyles({
     root: {
@@ -21,8 +22,9 @@ export default function SimpleBottomNavigation() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const history = useHistory();
-    const preventDefault = (event) => event.preventDefault();
-    if (true) {
+    const user = useSelector(state => state.User.user)
+
+    if (!user) {
         return (
             <div >
             <BottomNavigation
@@ -41,20 +43,20 @@ export default function SimpleBottomNavigation() {
             </div>
         );
     }
+
     return (
         <BottomNavigation
             value={value}
             onChange={(event, newValue) => {
                 setValue(newValue);
-                history.push(newValue);
+                 history.push(newValue);
             }}
             showLabels
             className={classes.root}
         >
             <BottomNavigationAction label="Home" icon={<HomeIcon />} value={'/'}/>
             <BottomNavigationAction label="New post" icon={<CreateIcon />} value={'/NewPost'}/>
-            <BottomNavigationAction label="Setting" icon={<SettingsIcon />} value={'Settings'}/>
-            <BottomNavigationAction label="Sign out" icon={<ExitToAppIcon />}/>
+            <BottomNavigationAction label="Setting" icon={<SettingsIcon />} value={'/Settings'}/>
         </BottomNavigation>
     );
 }

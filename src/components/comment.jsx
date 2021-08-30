@@ -35,9 +35,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Comment = ({ comments }) => {
-    console.log(comments);
     const classes = useStyles();
     const [userName, setUserName] = React.useState('');
+    
     if(!comments) return 'Loading ...'
     return (
         <List className={classes.root}>

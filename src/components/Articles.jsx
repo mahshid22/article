@@ -16,7 +16,8 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from "react-router-dom";
 import '../css/Article.css'
-import { getArticles } from '../actions'
+import { getArticles, checkUser } from '../actions'
+import NavBar from './NavBar'
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,33 +35,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AlignItemsList() {
-    const dispatch = useDispatch();
     const articles = useSelector(state => state.Articles.articles)
     const articlesCount = useSelector(state => state.Articles.articlesCount)
-    const classes = useStyles();
-    // const [articles, setArticles] = React.useState([]);
-    // const [articlesCount, setArticlesCount] = React.useState(0);
+    const user = useSelector(state => state.User.user)
     const [page, setPage] = React.useState(1);
+    const dispatch = useDispatch();
     const history = useHistory();
+    const classes = useStyles();
     const handleChange = (event, value) => {
         setPage(value);
     };
     const handleRedirectToArticle = (slug) => {
-        history.push(`/article/${slug}`);
-        // setPage(value);
+        if (localStorage.getItem('jwt')) {
+            history.push(`/article/${slug}`);
+        }
     };
 
     useEffect(() => {
         dispatch(getArticles())
+        dispatch(checkUser(localStorage.getItem('jwt')))
     }, []);
 
-    if (!articlesCount) return <p>Loading...</p>
+    
     return (
         <>
+            <NavBar
+            />
             <div className="article_title">
                 <h1>ARTICLES LIST</h1>
             </div>
-            <List className={classes.root}>
+            {/* { <p>Loading...</p>} */}
+            {!user && !articlesCount && <p>Loading ...</p>}
+            {articlesCount && <List className={classes.root}>
                 {articles.map((article) => {
                     return (
                         <>
@@ -95,9 +101,7 @@ export default function AlignItemsList() {
                         </>
                     )
                 })}
-
-
-            </List>
+            </List>}
             <Pagination count={articlesCount / 20} shape="rounded" page={page} onChange={handleChange} />
         </>
     );

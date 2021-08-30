@@ -8,15 +8,12 @@ import SignUp from './components/SignUp'
 import NewPost from './components/NewPost'
 import Settings from './components/Settings'
 import Article from './components/Article'
+import Page404 from './components/Page404'
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <NavBar
-            // appName={this.props.appName}
-            // currentUser={this.props.currentUser} 
-      />
         <Switch>
           <Route exact path='/' component={Articles} />
           <Route path='/SignIn' component={SignIn} />
@@ -24,6 +21,7 @@ function App() {
           <Route path='/NewPost' component={NewPost} />
           <Route path='/settings' component={Settings} />
           <Route path='/article/:slug' component={Article} />
+          <Route path='*' component={Page404} />
           {/* <Route path='/editor/:slug' component={Editor} /> */}
           {/* <Route path='/@:username/favorites' component={ProfileFavorites} />
           <Route path='/@:username' component={Profile} /> */}

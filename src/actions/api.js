@@ -17,7 +17,7 @@ const apiMiddleware = (store) => next => action => {
     onSuccess,
     onFailure,
     label,
-    // headers
+    headers
   } = action.payload;
   const dataOrParams = ["GET"].includes(method) ? "params" : "data";
 
@@ -29,12 +29,12 @@ const apiMiddleware = (store) => next => action => {
   if (label) {
     store.dispatch(apiStart(label));
   }
-
+console.log(headers);
   axios
     .request({
       url,
       method,
-      // headers,
+      headers,
       [dataOrParams]: data
     })
     .then(({ data }) => {
@@ -44,11 +44,11 @@ const apiMiddleware = (store) => next => action => {
       store.dispatch(apiError(error));
       // store.dispatch(onFailure(error));
 
-      if (error.response && error.response.status === 403) {
-        store.dispatch(onFailure(error));
+      if (error.response && (error.response.status === 403 || error.response.status === 422)) {
+        console.log('333',error.response);
+        store.dispatch(onFailure(error.response));
       }
       if (error.response && error.response.status === 400) {
-        console.log('400');
         store.dispatch(onFailure(error));
       }
     })

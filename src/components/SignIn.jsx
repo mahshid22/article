@@ -3,9 +3,10 @@ import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from "react-redux";
-import {signInUsers} from '../actions'
+import { signInUsers } from '../actions'
+import NavBar from './NavBar'
+import ListErrors from './ShowErrors'
 import '../css/register.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -23,26 +24,34 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const user = useSelector(state => state.user.user)
-    const logedIn = useSelector(state => state.user.logedIn)
-    const dispatch = useDispatch();
+    const user = useSelector(state => state.User.user)
+    const userError = useSelector(state => state.User.userError)
+    const logedIn = useSelector(state => state.User.logedIn)
+
     useEffect(() => {
-        history.push('/');
+        if (user) {
+            localStorage.setItem('jwt', user.token);
+            history.push('/');
+        }
     }, [logedIn, user]);
-    function handleSubmit(event) {
+
+    const handleSubmit = (event) => {
         event.preventDefault();
-        let data ={}
-        data={user: { email, password }}
+        let data = {}
+        data = { user: { email, password } }
         dispatch(signInUsers(data))
     }
-
     return (
         <>
+            <NavBar
+            />
             <div className="signUser_title">
                 <h1>SIGN IN</h1>
             </div>
+            {userError && <ListErrors errors={userError.data.errors} />}
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
                 <div>
                     <div>

@@ -10,10 +10,17 @@ const Articles = (state = [], action) => {
             return Object.assign({}, state, {
                 article: action.payload.article,
             }) //assign     
+        case 'SET_ADD_ARTICLE':
+            return Object.assign({}, state, {
+                addArticle: action.payload.article,
+            }) //assign     
         case 'SET_SINGLE_ARTICLES_COMMENTS':
             return Object.assign({}, state, {
                 comments: action.payload.comments,
             }) //assign     
+        case 'RESET_STORE':
+            console.log();
+            return state=[] //assign     
         default:
             return state        
     }
