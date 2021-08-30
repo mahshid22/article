@@ -207,6 +207,32 @@ export function signInUsers(data) {
         payload: data
       };
     }
+
+
+  export function updateUser(data) {
+      return apiAction({ 
+        url: `${process.env.REACT_APP_ACTION_URL}/user`,
+        method: 'PUT',
+        data: data.user,
+        onSuccess: setUpdateUser,
+        onFailure: failedUpdateUser,
+        label: 'FETCH_UPDATE_USER',
+        headers:{'Authorization': `Token ${data.jwt}`}
+      });
+    }
+    
+    function setUpdateUser(data) {
+      return {
+        type: 'SET_UPDATE_USER',
+        payload: data
+      };
+    }
+    function failedUpdateUser(data) {
+      return {
+        type: 'FAILED_UPDATE_USER',
+        payload: data
+      };
+    }
 ///////////////////////////// API FUNC
 function apiAction({
     url = "",

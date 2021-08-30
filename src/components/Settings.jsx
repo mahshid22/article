@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from "react-redux";
-import { resetStore } from '../actions'
+import { resetStore, updateUser } from '../actions'
 import { Redirect, useHistory } from "react-router-dom";
 import NavBar from './NavBar'
-
+import SimpleDialog from './Modal'
 import '../css/setting.css'
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,10 +29,27 @@ export default function Settings() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const user = useSelector(state => state.User.user)
+    const updateUserInfo = useSelector(state => state.User.updateUser)
+    const [open, setOpen] = React.useState(false);
 
+    useEffect(() => {
+        if(user){
+            setPicUrl(user.image?user.image:'')
+            setUserName(user.username)
+            setEmail(user.email)
+        }
+    }, [user])
+    useEffect(() => {
+        if(updateUserInfo){
+            setOpen(true)
+        }
+        return ()=>{
+            dispatch(resetStore())
+        }
+    }, [updateUserInfo])
     const handleSubmit = (event) => {
         event.preventDefault();
-        // console.log('Email:', email, 'Password: ', password, 'userName: ', userName);
+        dispatch(updateUser({user: {username: userName, email, password, image: picUrl }, jwt:  localStorage.getItem('jwt')}))
     }
     const handleSignOut = (event) => {
         event.preventDefault();
@@ -40,6 +57,11 @@ export default function Settings() {
         dispatch(resetStore())
         history.push('/');
     }
+
+    const handleClose = (value) => {
+        setOpen(false);
+      };
+
 
     if (!user) return <Redirect to='/' />
 
@@ -108,6 +130,7 @@ export default function Settings() {
             >
                 SIGN OUT
             </Button>
+            {updateUserInfo && <SimpleDialog selectedValue='user was updated' open={open} onClose={handleClose} />}
         </>
     );
 }

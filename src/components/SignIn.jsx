@@ -30,6 +30,7 @@ export default function SignIn() {
     const user = useSelector(state => state.User.user)
     const userError = useSelector(state => state.User.userError)
     const logedIn = useSelector(state => state.User.logedIn)
+    const [disabledStatus, setdisabledStatus] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -40,6 +41,7 @@ export default function SignIn() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setdisabledStatus(true)
         let data = {}
         data = { user: { email, password } }
         dispatch(signInUsers(data))
@@ -80,6 +82,7 @@ export default function SignIn() {
                     variant="outlined"
                     color="primary"
                     className={classes.btn}
+                    disabled={disabledStatus}
                 >
                     Login
                 </Button>

@@ -16,6 +16,11 @@ const User = (state = [], action) => {
                 user: action.payload.user,
             }) //assign      
             break
+        case 'SET_UPDATE_USER':
+            return Object.assign({}, state, {
+                updateUser: action.payload.user,
+            }) //assign      
+            break
         case 'FAILED_SIGN_UP_USER':
             console.log(action.payload.error);  
             console.log(action.payload);  
