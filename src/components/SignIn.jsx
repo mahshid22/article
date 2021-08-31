@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { useDispatch, useSelector } from "react-redux";
 import { signInUsers } from '../actions'
 import NavBar from './NavBar'
 import ListErrors from './ShowErrors'
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SignIn() {
+const SignIn = () => {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -90,3 +90,5 @@ export default function SignIn() {
         </>
     );
 }
+
+export default SignIn

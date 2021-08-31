@@ -21,23 +21,16 @@ const User = (state = [], action) => {
                 updateUser: action.payload.user,
             }) //assign      
             break
-        case 'FAILED_SIGN_UP_USER':
-            console.log(action.payload.error);  
-            console.log(action.payload);  
-            console.log(action.error);  
+        case 'FAILED_SIGN_UP_USER': 
             return Object.assign({}, state, {
                 userError: action.payload ,
             }) //assign
             break    
-        case 'FAILED_SIGN_IN_USER':
-            console.log(action.payload.error);  
-            console.log(typeof action.payload);  
-            console.log(action.error); 
+        case 'FAILED_SIGN_IN_USER': 
             return Object.assign({}, state, {
                 userError: action.payload ,
             }) //assign  
             case 'RESET_STORE':
-            console.log();
             return state=[] //assign      
         default:
             return state        

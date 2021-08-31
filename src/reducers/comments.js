@@ -6,7 +6,6 @@ const Comments = (state = [], action) => {
         //         articlesCount: action.payload.articlesCount,
         //     }) //assign 
         case 'RESET_STORE':
-            console.log();
             return Object.assign({}, {...state, User:{}}) //assign           
         default:
             return state        

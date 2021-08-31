@@ -1,6 +1,5 @@
 const Articles = (state = [], action) => {
-    console.log(action);
-    switch (action.type) {               
+    switch (action.type) {
         case 'SET_ARTICLES':
             return Object.assign({}, state, {
                 articles: action.payload.articles,
@@ -19,10 +18,9 @@ const Articles = (state = [], action) => {
                 comments: action.payload.comments,
             }) //assign     
         case 'RESET_STORE':
-            console.log();
-            return state=[] //assign     
+            return state = [] //assign     
         default:
-            return state        
+            return state
     }
 }
 

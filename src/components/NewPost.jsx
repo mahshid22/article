@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import NavBar from './NavBar'
 import { addArticle , resetStore} from '../actions'
-import { Redirect, useHistory } from "react-router-dom";
-
 import '../css/Posts.css'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTextField-root': {
@@ -20,25 +20,23 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function NewPost() {
+const NewPost=() =>{
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [title, setTitle] = useState('');
     const [description, setDesc] = useState('');
     const [body, setBody] = useState('');
     const [disabledStatus, setdisabledStatus] = useState(false);
     const user = useSelector(state => state.User.user)
     const addedArticle = useSelector(state => state.Articles.addArticle)
-    const dispatch = useDispatch();
-    const history = useHistory();
 
     useEffect(() => {
-        console.log('addedArticle',addedArticle);
         if(addedArticle){
             history.push('/');
         }
         return ()=>{
-            console.log('hereee');
-            dispatch(resetStore())
+            if(addedArticle) dispatch(resetStore())
         }
     }, [addedArticle])
 
@@ -60,7 +58,6 @@ export default function NewPost() {
                 <div>
                     <TextField
                         id="outlined-name"
-                        // fullWidth={true}
                         label="Title"
                         value={title}
                         onInput={e => setTitle(e.target.value)}
@@ -102,3 +99,5 @@ export default function NewPost() {
         </>
     );
 }
+
+export default NewPost

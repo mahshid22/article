@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Article(props) {
+const Article = (props) => {
     let { slug } = useParams();
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -49,10 +49,8 @@ export default function Article(props) {
             {article && <>
                 <div className='single_article_header'>
                     <p>{article.title}</p>
-                    {/* <p>{article.author.username} </p> */}
                     <p>{article.author.username} {article.author.username === user ? <span>Delete Article</span> : ''}</p>
                 </div>
-
                 <p className='single_article_body'>{article.body}</p>
                 <hr style={{ width: '70%' }} />
                 <form className={classes.root} noValidate autoComplete="off" onSubmit={handleAddComment}>
@@ -84,3 +82,4 @@ export default function Article(props) {
         </>
     );
 }
+export default Article

@@ -37,8 +37,8 @@ const useStyles = makeStyles(theme => ({
 const Comment = ({ comments }) => {
     const classes = useStyles();
     const [userName, setUserName] = React.useState('');
-    
-    if(!comments) return 'Loading ...'
+
+    if (!comments) return 'Loading ...'
     return (
         <List className={classes.root}>
             {comments.map(comment => {
@@ -70,7 +70,7 @@ const Comment = ({ comments }) => {
                             />
                             <ListItemSecondaryAction className={classes.deleteIcon}>
                                 <IconButton edge="end" aria-label="star" onClick={() => console.log('hello')}>
-                                    {userName !== comment.author.usernameer?<DeleteIcon />:'' }
+                                    {userName !== comment.author.usernameer ? <DeleteIcon /> : ''}
                                 </IconButton>
                             </ListItemSecondaryAction>
                         </ListItem>

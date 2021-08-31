@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -7,8 +9,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 
 const useStyles = makeStyles({
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function SimpleBottomNavigation() {
+const Navigation = () => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const history = useHistory();
@@ -27,19 +27,19 @@ export default function SimpleBottomNavigation() {
     if (!user) {
         return (
             <div >
-            <BottomNavigation
-                value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                    history.push(newValue);
-                }}
-                showLabels
-                className={classes.root}
-            >
-                <BottomNavigationAction label="Home" value={'/'} icon={<HomeIcon />}/>
-                <BottomNavigationAction label="Sign in" value={'/SignIn'} icon={<LockOpenIcon />}/>
-                <BottomNavigationAction label="Sign up" value={'/SignUp'} icon={<AssignmentIndIcon />}/>
-            </BottomNavigation>
+                <BottomNavigation
+                    value={value}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                        history.push(newValue);
+                    }}
+                    showLabels
+                    className={classes.root}
+                >
+                    <BottomNavigationAction label="Home" value={'/'} icon={<HomeIcon />} />
+                    <BottomNavigationAction label="Sign in" value={'/SignIn'} icon={<LockOpenIcon />} />
+                    <BottomNavigationAction label="Sign up" value={'/SignUp'} icon={<AssignmentIndIcon />} />
+                </BottomNavigation>
             </div>
         );
     }
@@ -49,14 +49,16 @@ export default function SimpleBottomNavigation() {
             value={value}
             onChange={(event, newValue) => {
                 setValue(newValue);
-                 history.push(newValue);
+                history.push(newValue);
             }}
             showLabels
             className={classes.root}
         >
-            <BottomNavigationAction label="Home" icon={<HomeIcon />} value={'/'}/>
-            <BottomNavigationAction label="New post" icon={<CreateIcon />} value={'/NewPost'}/>
-            <BottomNavigationAction label="Setting" icon={<SettingsIcon />} value={'/Settings'}/>
+            <BottomNavigationAction label="Home" icon={<HomeIcon />} value={'/'} />
+            <BottomNavigationAction label="New post" icon={<CreateIcon />} value={'/NewPost'} />
+            <BottomNavigationAction label="Setting" icon={<SettingsIcon />} value={'/Settings'} />
         </BottomNavigation>
     );
 }
+
+export default Navigation

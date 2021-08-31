@@ -7,7 +7,6 @@ const apiMiddleware = (store) => next => action => {
   if(typeof action === 'function')
   return action(store.dispatch)
   next(action)
-  
 
   const {
     url,
@@ -29,7 +28,6 @@ const apiMiddleware = (store) => next => action => {
   if (label) {
     store.dispatch(apiStart(label));
   }
-console.log(headers);
   axios
     .request({
       url,
@@ -42,10 +40,7 @@ console.log(headers);
     })
     .catch(error => {
       store.dispatch(apiError(error));
-      // store.dispatch(onFailure(error));
-
       if (error.response && (error.response.status === 403 || error.response.status === 422)) {
-        console.log('333',error.response);
         store.dispatch(onFailure(error.response));
       }
       if (error.response && error.response.status === 400) {

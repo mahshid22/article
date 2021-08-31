@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import NavBar from './NavBar'
-import {signUpUsers,resetStore} from '../actions'
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { signUpUsers, resetStore } from '../actions'
 import ListErrors from './ShowErrors'
 import '../css/register.css'
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SignUp() {
+const SignUp = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
@@ -29,31 +29,22 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [disabledStatus, setdisabledStatus] = useState(false);
-    const [error, setError] = useState('');
     const userError = useSelector(state => state.User.userError)
     const user = useSelector(state => state.User.user)
 
     useEffect(() => {
         setdisabledStatus(false)
-        return ()=>{
-            console.log('hereee');
-            // dispatch(resetStore())
-        }
     }, [userError]);
 
     useEffect(() => {
-        if(user){
+        if (user) {
             history.push('/');
-        }
-        return ()=>{
-            console.log('hereee');
-            // dispatch(resetStore())
         }
     }, [user]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(signUpUsers({user:{password,email,username}}))
+        dispatch(signUpUsers({ user: { password, email, username } }))
         setdisabledStatus(true)
     }
 
@@ -111,3 +102,5 @@ export default function SignUp() {
         </>
     );
 }
+
+export default SignUp

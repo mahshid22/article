@@ -39,23 +39,29 @@ export default function AlignItemsList() {
     const articlesCount = useSelector(state => state.Articles.articlesCount)
     const user = useSelector(state => state.User.user)
     const [page, setPage] = React.useState(1);
+    const [nextPage, setnextPage] = React.useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const classes = useStyles();
+
+    useEffect(() => {
+        dispatch(getArticles())
+        dispatch(checkUser(localStorage.getItem('jwt')))
+    }, []);
+    useEffect(() => {
+        setnextPage(false)
+    }, [articles]);
+
     const handleChange = (event, value) => {
         setPage(value);
+        dispatch(getArticles((value-1)*20))
+        setnextPage(true)
     };
     const handleRedirectToArticle = (slug) => {
         if (localStorage.getItem('jwt')) {
             history.push(`/article/${slug}`);
         }
     };
-
-    useEffect(() => {
-        dispatch(getArticles())
-        dispatch(checkUser(localStorage.getItem('jwt')))
-    }, []);
-
     
     return (
         <>
@@ -65,8 +71,8 @@ export default function AlignItemsList() {
                 <h1>ARTICLES LIST</h1>
             </div>
             {/* { <p>Loading...</p>} */}
-            {!user && !articlesCount && <p>Loading ...</p>}
-            {articlesCount && <List className={classes.root}>
+            { (!articlesCount || nextPage) && <p>Loading ...</p>}
+            {articlesCount && !nextPage &&<List className={classes.root}>
                 {articles.map((article) => {
                     return (
                         <>
