@@ -1,4 +1,5 @@
 const Articles = (state = [], action) => {
+    console.log(action);
     switch (action.type) {
         case 'SET_ARTICLES':
             return Object.assign({}, state, {

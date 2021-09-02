@@ -16,14 +16,13 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from "react-router-dom";
 import '../css/Article.css'
-import { getArticles, checkUser } from '../actions'
+import { getArticles, checkUser, addStartToArticle, removeStarFromArticle } from '../actions'
 import NavBar from './NavBar'
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        // maxWidth: '36ch',
         backgroundColor: theme.palette.background.paper,
     },
     inline: {
@@ -54,15 +53,24 @@ export default function AlignItemsList() {
 
     const handleChange = (event, value) => {
         setPage(value);
-        dispatch(getArticles((value-1)*20))
+        dispatch(getArticles((value - 1) * 20))
         setnextPage(true)
     };
+
     const handleRedirectToArticle = (slug) => {
         if (localStorage.getItem('jwt')) {
             history.push(`/article/${slug}`);
         }
     };
-    
+
+    const favoriteArticleHandler = (slug, fav) => {
+        if (localStorage.getItem('jwt')) {
+            // history.push(`/article/${slug}`);
+            console.log(slug, fav);
+            fav? dispatch(removeStarFromArticle({slug, jwt:localStorage.getItem('jwt')})): dispatch(addStartToArticle({slug, jwt:localStorage.getItem('jwt')}))
+        }
+    };
+    console.log('articles', articles);
     return (
         <>
             <NavBar
@@ -70,17 +78,17 @@ export default function AlignItemsList() {
             <div className="article_title">
                 <h1>ARTICLES LIST</h1>
             </div>
-            {/* { <p>Loading...</p>} */}
-            { (!articlesCount || nextPage) && <p>Loading ...</p>}
-            {articlesCount && !nextPage &&<List className={classes.root}>
+            {(!articlesCount || nextPage) && <p>Loading ...</p>}
+            {articlesCount && !nextPage && <List className={classes.root}>
                 {articles.map((article) => {
                     return (
                         <>
-                            <ListItem alignItems="flex-start" onClick={() => handleRedirectToArticle(article.slug)}>
+                            <ListItem alignItems="flex-start" >
                                 <ListItemAvatar>
                                     <Avatar alt="Remy Sharp" src={article.author.image} />
                                 </ListItemAvatar>
                                 <ListItemText
+                                    onClick={() => handleRedirectToArticle(article.slug)}
                                     className={classes.ListItemTextHover}
                                     primary={article.title}
                                     secondary={
@@ -98,7 +106,7 @@ export default function AlignItemsList() {
                                     }
                                 />
                                 <ListItemSecondaryAction>
-                                    <IconButton edge="end" aria-label="star" onClick={() => console.log('hello')}>
+                                    <IconButton edge="end" aria-label="star" onClick={() => favoriteArticleHandler(article.slug, article.favorited)}>
                                         {article.favoritesCount} {article.favorited ? <StarIcon /> : <StarBorderIcon />}
                                     </IconButton>
                                 </ListItemSecondaryAction>

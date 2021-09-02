@@ -127,6 +127,66 @@ function failedAtricle(data) {
   };
 }
 
+
+// add  star to Article
+export function addStartToArticle(data) {
+  return apiAction({
+    url: `${process.env.REACT_APP_ACTION_URL}/articles/${data.slug}/favorite`,
+    method: 'POST',
+    // data: data.article,
+    onSuccess: setAddStarToAtricle,
+    onFailure: failedStarToAtricle,
+    label: 'FETCH_ADD_STAR_TO_ARTICLE',
+    headers: {
+      'Authorization': `Token ${data.jwt}`
+    }
+  });
+}
+
+function setAddStarToAtricle(data) {
+  return {
+    type: 'SET_ADD_STAR_TO_ARTICLE',
+    payload: data
+  };
+}
+
+function failedStarToAtricle(data) {
+  return {
+    type: 'FAILED_ADD_STAR_TO_ARTICLE',
+    payload: data
+  };
+}
+
+
+// remove  star to Article
+export function removeStarFromArticle(data) {
+  return apiAction({
+    url: `${process.env.REACT_APP_ACTION_URL}/articles/${data.slug}/favorite`,
+    method: 'DELETE',
+    // data: data.article,
+    onSuccess: setRemoveStarFromAtricle,
+    onFailure: failedRemoveStartFromAtricle,
+    label: 'FETCH_REMOVE_STAR_FROM_ARTICLE',
+    headers: {
+      'Authorization': `Token ${data.jwt}`
+    }
+  });
+}
+
+function setRemoveStarFromAtricle(data) {
+  return {
+    type: 'SET_REMOVE_STAR_FROM_ARTICLE',
+    payload: data
+  };
+}
+
+function failedRemoveStartFromAtricle(data) {
+  return {
+    type: 'FAILED_REMOVE_STAR_FROM_ARTICLE',
+    payload: data
+  };
+}
+
 // sign in USER
 export function signUpUsers(data) {
   return apiAction({
