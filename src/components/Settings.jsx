@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SimpleDialog from './Modal'
-import NavBar from './NavBar'
 import { resetStore, updateUser } from '../actions'
 import '../css/setting.css'
 
@@ -74,8 +73,6 @@ const Settings = () => {
     if (!user) return <Redirect to='/' />
     return (
         <>
-            <NavBar
-            />
             <div className="setting_title">
                 <h1>Your Settings</h1>
             </div>

@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { signInUsers } from '../actions'
-import NavBar from './NavBar'
 import ListErrors from './ShowErrors'
 import '../css/register.css'
 
@@ -48,8 +47,6 @@ const SignIn = () => {
     }
     return (
         <>
-            <NavBar
-            />
             <div className="signUser_title">
                 <h1>SIGN IN</h1>
             </div>

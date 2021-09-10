@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import NavBar from './NavBar'
-import { signUpUsers, resetStore } from '../actions'
+import { signUpUsers } from '../actions'
 import ListErrors from './ShowErrors'
 import '../css/register.css'
 
@@ -50,8 +49,6 @@ const SignUp = () => {
 
     return (
         <>
-            <NavBar
-            />
             <div className="signUser_title">
                 <h1>SIGN UP</h1>
             </div>

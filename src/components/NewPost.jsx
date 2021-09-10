@@ -4,9 +4,8 @@ import { Redirect, useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import NavBar from './NavBar'
 import { addArticle , resetStore} from '../actions'
-import '../css/Posts.css'
+import styles from '../css/Posts.module.css'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,9 +48,7 @@ const NewPost=() =>{
     if (!user) return <Redirect to='/' /> 
     return (
         <>
-            <NavBar
-            />
-            <div className="post_title">
+            <div className={styles.post_title}>
                 <h1>NEW POST</h1>
             </div>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>

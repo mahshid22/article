@@ -1,19 +1,19 @@
-import React, { Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Articles from './components/Articles'
-import NavBar from './components/NavBar'
-import SignIn from './components/SignIn'
-import SignUp from './components/SignUp'
-import NewPost from './components/NewPost'
-import Settings from './components/Settings'
-import Article from './components/Article'
-import Page404 from './components/Page404'
-
+import { Route, Switch } from 'react-router-dom'
+import Navigation from './components/NavBar'
+const Article = lazy(() => import('./components/Article'/* webpackChunkName: "Article", webpackPrefetch: true  */))
+const Page404 = lazy(() => import('./components/Page404'/* webpackChunkName: "Page404", webpackPrefetch: true  */))
+const NewPost = lazy(() => import('./components/NewPost'/* webpackChunkName: "NewPost", webpackPrefetch: true  */))
+const SignUp = lazy(() => import('./components/SignUp'/* webpackChunkName: "SignUp", webpackPrefetch: true  */))
+const SignIn = lazy(() => import('./components/SignIn'/* webpackChunkName: "SignIn", webpackPrefetch: true  */))
+const Articles = lazy(() => import('./components/Articles'/* webpackChunkName: "Articles", webpackPrefetch: true  */))
+const Settings = lazy(() => import('./components/Settings'/* webpackChunkName: "Settings", webpackPrefetch: true  */))
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <Navigation />
+      <Suspense fallback={<p>Loading...</p>}>
         <Switch>
           <Route exact path='/' component={Articles} />
           <Route path='/SignIn' component={SignIn} />
@@ -22,11 +22,8 @@ function App() {
           <Route path='/settings' component={Settings} />
           <Route path='/article/:slug' component={Article} />
           <Route path='*' component={Page404} />
-          {/* <Route path='/editor/:slug' component={Editor} /> */}
-          {/* <Route path='/@:username/favorites' component={ProfileFavorites} />
-          <Route path='/@:username' component={Profile} /> */}
         </Switch>
-      </BrowserRouter>
+      </Suspense>
     </div>
   );
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import NavBar from './NavBar'
 import '../css/register.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -28,8 +27,6 @@ export default function Page404() {
 
     return (
         <>
-            <NavBar
-            />
             <div className="signUser_title">
                 <h1>404 page</h1>
             </div>

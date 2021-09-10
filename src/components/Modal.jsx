@@ -1,6 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { blue } from '@material-ui/core/colors';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 

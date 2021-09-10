@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -9,7 +9,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
@@ -17,8 +16,6 @@ import Pagination from '@material-ui/lab/Pagination';
 import { useHistory } from "react-router-dom";
 import '../css/Article.css'
 import { getArticles, checkUser, addStartToArticle, removeStarFromArticle } from '../actions'
-import NavBar from './NavBar'
-import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -73,8 +70,6 @@ export default function AlignItemsList() {
     console.log('articles', articles);
     return (
         <>
-            <NavBar
-            />
             <div className="article_title">
                 <h1>ARTICLES LIST</h1>
             </div>

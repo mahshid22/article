@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Comment from './comment';
-import NavBar from './NavBar'
 import { getSingleArticles, getSingleArticlesComments, addComment } from '../actions'
 import '../css/Article.css';
 const useStyles = makeStyles((theme) => ({
@@ -39,12 +38,10 @@ const Article = (props) => {
         event.preventDefault();
         dispatch(addComment(slug, { body }))
     }) // add comment to the article
-
-    if (!slug) return <Redirect to='/' />
+console.log(slug, user);
+    if (!slug || !user) return <Redirect to='/' />
     return (
         <>
-            <NavBar
-            />
             {!article && <p>Loading ...</p>}
             {article && <>
                 <div className='single_article_header'>
