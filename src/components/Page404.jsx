@@ -27,13 +27,14 @@ export default function Page404() {
 
     return (
         <>
-            <div className="signUser_title">
-                <h1>404 page</h1>
+            <div className="page404_title">
+                <h1 className="h1_page404_title">404 page</h1>
             </div>
             <br />
             <Button
                 onClick={handle404page}
                 className={classes.btn}
+                className='p404'
                 variant="outlined"
                 color="primary"
             >
